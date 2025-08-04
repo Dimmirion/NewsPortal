@@ -1,0 +1,11 @@
+Здравствуйте, {{ user.username }}!
+
+Новые статьи в категории "{{ category.name }}" за последнюю неделю:
+
+{% for post in posts %}
+- {{ post.title }}: {{ post.text|truncatechars:50 }}...
+  Читать полностью: {{ site_url }}{% url 'post_detail' post.id %}
+{% endfor %}
+
+С уважением,
+Команда NewsPortal

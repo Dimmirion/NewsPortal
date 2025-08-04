@@ -1,0 +1,111 @@
+# 1. Импорт модулей
+from django.contrib.auth.models import User
+from news.models import Author, Category, Post, PostCategory, Comment
+
+# 2. Создание пользователей
+user1 = User.objects.create_user('user1')
+user2 = User.objects.create_user('user2')
+
+# 3. Создание двух авторских объектов, связанных с пользователями
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+# 4. Добавление категорий
+category1 = Category.objects.create(name='Sports')
+category2 = Category.objects.create(name='Politics')
+category3 = Category.objects.create(name='Education')
+category4 = Category.objects.create(name='Technology')
+
+# 5. Добавление 2 артикулов и 1 новости
+post1 = Post.objects.create(
+    author=author1,
+    post_type='article',
+    title='First Article',
+    text='This is the text of the first article. It contains many words about important topics that everyone should know and understand to be successful in life and work.',
+    rating=0
+)
+
+post2 = Post.objects.create(
+    author=author2,
+    post_type='article',
+    title='Second Article',
+    text='Another interesting article that discusses various aspects of modern technology and its impact on society and individual lives across different cultures and countries.',
+    rating=0
+)
+
+post3 = Post.objects.create(
+    author=author1,
+    post_type='news',
+    title='Breaking News',
+    text='Important news event happened today that will change everything we know about the world. Experts say this development is unprecedented in modern history.',
+    rating=0
+)
+
+# 6. Присваивание категории публикациям
+PostCategory.objects.create(post=post1, category=category1)
+PostCategory.objects.create(post=post1, category=category4)
+PostCategory.objects.create(post=post2, category=category2)
+PostCategory.objects.create(post=post2, category=category3)
+PostCategory.objects.create(post=post3, category=category1)
+
+# 7. Создание комментариев
+comment1 = Comment.objects.create(post=post1, user=user1, text='Great article!', rating=0)
+comment2 = Comment.objects.create(post=post2, user=user2, text='I disagree with some points.', rating=0)
+comment3 = Comment.objects.create(post=post3, user=user1, text='This is amazing news!', rating=0)
+comment4 = Comment.objects.create(post=post1, user=user2, text='Well researched and written.', rating=0)
+
+# 8. Применить likes и dislikes
+post1.like()
+post1.like()
+post1.dislike()
+
+post2.like()
+post2.like()
+post2.like()
+
+post3.dislike()
+post3.dislike()
+
+comment1.like()
+comment1.like()
+comment2.dislike()
+comment3.like()
+comment4.like()
+comment4.like()
+comment4.like()
+
+# 9. Обновление рейтинга автора
+author1.update_rating()
+author2.update_rating()
+
+# 10. Отображение лучшего пользователя
+best_author = Author.objects.all().order_by('-rating').first()
+print(f"Best author: {best_author.user.username}, rating: {best_author.rating}")
+
+# 11. Отображение лучшего поста
+best_post = Post.objects.all().order_by('-rating').first()
+print(f"Best post:")
+print(f"Date: {best_post.created_at}")
+print(f"Author: {best_post.author.user.username}")
+print(f"Rating: {best_post.rating}")
+print(f"Title: {best_post.title}")
+print(f"Preview: {best_post.preview()}")
+
+# 12. Отобразить комментарии к лучшему посту
+print("\nComments for the best post:")
+for comment in best_post.comment_set.all().order_by('-created_at'):
+    print(f"Date: {comment.created_at}")
+    print(f"User: {comment.user.username}")
+    print(f"Rating: {comment.rating}")
+    print(f"Text: {comment.text}\n")
+
+Задача к модулю 18: Проверка работы фильтра:
+from news.templatetags.custom_filters import censor
+print(censor("Тестовый текст о том, что он редиска"))  # Должно вернуть "Тестовый текст о том, что он р******"
+
+К модулю 20: Выполним команды для создания групп:
+python manage.py shell
+from django.contrib.auth.models import Group
+Group.objects.get_or_create(name='common')
+Group.objects.get_or_create(name='authors')
+exit()

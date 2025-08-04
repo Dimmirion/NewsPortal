@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Еженедельный дайджест</title>
+</head>
+<body>
+    <p>Здравствуйте, {{ user.username }}!</p>
+
+    <p>Новые статьи в категории "{{ category.name }}" за последнюю неделю:</p>
+
+    <ul>
+    {% for post in posts %}
+        <li>
+            <strong>{{ post.title }}</strong>: {{ post.text|truncatechars:50 }}...
+            <br>
+            <a href="{{ site_url }}{% url 'post_detail' post.id %}">Читать полностью</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <p>С уважением,<br>
+    Команда NewsPortal</p>
+</body>
+</html>

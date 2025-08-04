@@ -1,0 +1,25 @@
+
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+{% block title %}{{ post.title|censor }}{% endblock %}
+
+{% block content %}
+    <article>
+        <h2>{{ post.title|censor }}</h2>
+        <p>Published on: {{ post.created_at|date:"d.m.Y" }}</p>
+        <p>{{ post.content|censor }}</p>
+    </article>
+    <a href="{% url 'news_list' %}">Back to news list</a>
+{% endblock %}
+<div class="content mb-5">
+    {{ post.content|safe|linebreaks }}
+</div>
+
+{% if user.is_authenticated %}
+  {% if category in user.subscriber.categories.all %}
+    <a href="{% url 'unsubscribe' category.id %}" class="btn btn-danger">Отписаться</a>
+  {% else %}
+    <a href="{% url 'subscribe' category.id %}" class="btn btn-success">Подписаться</a>
+  {% endif %}
+{% endif %}

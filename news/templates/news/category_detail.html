@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+  {% if category in user.subscriber.categories.all %}
+    <a href="{% url 'news:unsubscribe' category.id %}" class="btn btn-danger">Отписаться</a>
+  {% else %}
+    <a href="{% url 'news:subscribe' category.id %}" class="btn btn-success">Подписаться</a>
+  {% endif %}
+{% endif %}

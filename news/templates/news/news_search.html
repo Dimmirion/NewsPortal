@@ -1,0 +1,10 @@
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Поиск</button>
+</form>
+
+<ul>
+    {% for post in filter.qs %}
+        <li>{{ post.title }} ({{ post.author }}, {{ post.date_created }})</li>
+    {% endfor %}
+</ul>

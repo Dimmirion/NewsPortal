@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Новая статья</title>
+</head>
+<body>
+    <h1>Новая статья: {{ post.title }}</h1>
+    <p>Категории: {{ categories|join:", " }}</p>
+    <p>{{ post.text|truncatechars:50 }}</p>
+    <a href="http://{{ site.domain }}{% url 'post_detail' post.pk %}">Читать полностью</a>
+</body>
+</html>

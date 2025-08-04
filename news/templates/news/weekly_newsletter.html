@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Еженедельная подборка новостей</title>
+</head>
+<body>
+    <h1>Новости за неделю в категории {{ category.name }}</h1>
+
+    {% for post in posts %}
+    <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.text|truncatechars:100 }}</p>
+        <a href="http://{{ site.domain }}{% url 'post_detail' post.pk %}">Читать полностью</a>
+    </div>
+    {% endfor %}
+</body>
+</html>

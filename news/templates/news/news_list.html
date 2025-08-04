@@ -1,0 +1,38 @@
+
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+{% block title %}News List{% endblock %}
+
+{% block content %}
+    <h2>All News</h2>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h3><a href="{% url 'news_detail' post.pk %}">{{ post.title|censor }}</a></h3>
+                <p>{{ post.created_at|date:"d.m.Y" }}</p>
+                <p>{{ post.content|truncatechars:20|censor }}</p>
+            </li>
+        {% empty %}
+            <li>No news yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
