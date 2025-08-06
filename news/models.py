@@ -114,3 +114,19 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return f'{self.user.username} (подписан на {self.categories.count()} категорий)'
+
+
+from django.db import models
+
+
+class News(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    views = models.PositiveIntegerField(default=0)  # Добавляем счетчик просмотров
+
+    # другие поля...
+
+    def __str__(self):
+        return self.title

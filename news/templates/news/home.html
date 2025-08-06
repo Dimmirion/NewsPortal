@@ -1,0 +1,14 @@
+{% extends 'default.html' %}
+
+{% block content %}
+<h1>Последние новости</h1>
+<div class="news-list">
+    {% for news_item in latest_news %}
+    <div class="news-item">
+        <h2><a href="/news/{{ news_item.id }}">{{ news_item.title }}</a></h2>
+        <p>{{ news_item.preview }}</p>
+        <span>Опубликовано: {{ news_item.pub_date|date:"d.m.Y H:i" }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

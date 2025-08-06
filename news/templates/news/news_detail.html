@@ -23,3 +23,19 @@
     <a href="{% url 'subscribe' category.id %}" class="btn btn-success">Подписаться</a>
   {% endif %}
 {% endif %}
+
+{% extends 'default.html' %}
+
+{% block content %}
+<article class="news-detail">
+    <h1>{{ news.title }}</h1>
+    <div class="meta">
+        <span>Автор: {{ news.author }}</span>
+        <span>Опубликовано: {{ news.pub_date|date:"d.m.Y H:i" }}</span>
+        <span>Просмотров: {{ news.views }}</span>
+    </div>
+    <div class="content">
+        {{ news.content|safe }}
+    </div>
+</article>
+{% endblock %}
