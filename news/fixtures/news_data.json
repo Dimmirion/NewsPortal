@@ -1,0 +1,19 @@
+[
+  {
+    "model": "news.category",
+    "pk": 1,
+    "fields": {
+      "name": "Политика"
+    }
+  },
+  {
+    "model": "news.post",
+    "pk": 1,
+    "fields": {
+      "title": "Заголовок новости",
+      "content": "Текст новости...",
+      "category": 1,
+      "is_published": true
+    }
+  }
+]

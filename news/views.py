@@ -105,3 +105,68 @@ def unsubscribe(request, category_id):
     subscriber = get_object_or_404(Subscriber, user=request.user)
     subscriber.categories.remove(category)
     return redirect('category_detail', category_id=category.id)
+
+
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
+
+def get_sidebar_data():
+    """Функция для получения данных сайдбара с кэшированием"""
+    cache_key = 'sidebar_data'
+    data = cache.get(cache_key)
+
+    if not data:
+        categories = Category.objects.all()
+        popular_news = News.objects.order_by('-views')[:5]
+        data = {
+            'categories': categories,
+            'popular_news': popular_news,
+        }
+        cache.set(cache_key, data, 300)  # Кэшируем на 5 минут
+
+    return data
+
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
+
+@cache_page(60)  # Кэшируем главную страницу на 1 минуту
+def home(request):
+    categories = Category.objects.all()
+    popular_news = News.objects.order_by('-views')[:5]
+    context = {
+        'title': 'Главная страница',
+        'categories': categories,
+        'popular_news': popular_news,
+    }
+    return render(request, 'news/home.html', context)
+
+
+def news_list(request):
+    news = News.objects.all()
+    context = {
+        'title': 'Все новости',
+        'news': news,
+    }
+    return render(request, 'news/news_list.html', context)
+
+
+def news_detail(request, pk):
+    # Кэширование отдельной статьи
+    cache_key = f'news_detail_{pk}'
+    news = cache.get(cache_key)
+
+    if not news:
+        news = get_object_or_404(News, pk=pk)
+        # Увеличиваем счетчик просмотров
+        news.views += 1
+        news.save()
+        # Кэшируем на 5 минут или пока статья не изменится
+        cache.set(cache_key, news, 300)
+
+    context = {
+        'title': news.title,
+        'news': news,
+    }
+    return render(request, 'news/news_detail.html', context)
