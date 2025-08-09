@@ -1,24 +1,91 @@
+{% load i18n %}
+
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <title>Еженедельный дайджест</title>
+    <meta charset="UTF-8">
+    <title>{% trans "Weekly digest" %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .digest-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .greeting {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        .category-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .post-list {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+        }
+        .post-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .post-title {
+            font-size: 1.1em;
+            color: #2980b9;
+            margin-bottom: 5px;
+        }
+        .post-excerpt {
+            color: #7f8c8d;
+            margin-bottom: 8px;
+        }
+        .read-more {
+            color: #27ae60;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .signature {
+            margin-top: 30px;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <p>Здравствуйте, {{ user.username }}!</p>
+    <div class="digest-container">
+        <p class="greeting">
+            {% blocktrans with username=user.username %}
+            Hello, {{ username }}!
+            {% endblocktrans %}
+        </p>
 
-    <p>Новые статьи в категории "{{ category.name }}" за последнюю неделю:</p>
+        <p>
+            {% blocktrans with category_name=category.name %}
+            New articles in category "<span class="category-name">{{ category_name }}</span>" for the past week:
+            {% endblocktrans %}
+        </p>
 
-    <ul>
-    {% for post in posts %}
-        <li>
-            <strong>{{ post.title }}</strong>: {{ post.text|truncatechars:50 }}...
-            <br>
-            <a href="{{ site_url }}{% url 'post_detail' post.id %}">Читать полностью</a>
-        </li>
-    {% endfor %}
-    </ul>
+        <ul class="post-list">
+            {% for post in posts %}
+            <li class="post-item">
+                <div class="post-title">{{ post.title }}</div>
+                <p class="post-excerpt">
+                    {{ post.text|truncatechars:50 }}...
+                </p>
+                <a href="{{ site_url }}{% url 'post_detail' post.id %}" class="read-more">
+                    {% trans "Read full article" %}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
 
-    <p>С уважением,<br>
-    Команда NewsPortal</p>
+        <p class="signature">
+            {% trans "Best regards," %}<br>
+            {% trans "The NewsPortal Team" %}
+        </p>
+    </div>
 </body>
 </html>

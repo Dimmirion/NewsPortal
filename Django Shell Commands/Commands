@@ -109,3 +109,11 @@ from django.contrib.auth.models import Group
 Group.objects.get_or_create(name='common')
 Group.objects.get_or_create(name='authors')
 exit()
+
+К модулю 26: Удаление всех данных
+python manage.py shell
+
+from news.models import Post, Category
+Post.objects.all().delete()
+Category.objects.all().delete()
+exit()

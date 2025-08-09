@@ -1,10 +1,97 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h2>Вход</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Войти</button>
-</form>
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2 class="auth-title">{% trans "Login" %}</h2>
+            {% if not user.is_authenticated %}
+            <p class="auth-subtitle">{% trans "Please enter your credentials" %}</p>
+            {% endif %}
+        </div>
+
+        <form method="post" class="auth-form" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">
+                    {% trans "Username or Email" %}
+                </label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="password-header">
+                    <label for="{{ form.password.id_for_label }}">
+                        {% trans "Password" %}
+                    </label>
+                    <a href="{% url 'password_reset' %}" class="forgot-password">
+                        {% trans "Forgot password?" %}
+                    </a>
+                </div>
+                {{ form.password }}
+                {% if form.password.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i>
+                    {% trans "Log In" %}
+                </button>
+            </div>
+
+            {% if 'remember_me' in form. Fields %}
+            <div class="form-check">
+                {{ form.remember_me }}
+                <label class="form-check-label" for="{{ form.remember_me.id_for_label }}">
+                    {% trans "Remember me" %}
+                </label>
+            </div>
+            {% endif %}
+        </form>
+
+        <div class="auth-footer">
+            <p class="auth-footer-text">
+                {% trans "Don't have an account?" %}
+                <a href="{% url 'register' %}" class="auth-footer-link">
+                    {% trans "Sign Up" %}
+                </a>
+            </p>
+
+            <div class="social-auth">
+                <p class="social-auth-text">{% trans "Or login with:" %}</p>
+                <div class="social-buttons">
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="social-btn google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="{% url 'social:begin' 'facebook' %}" class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,172 @@
+2025-08-09 21:18:02,794 ERROR Internal Server Error: / D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'OSError'>, OSError(0, 'Bad magic number'), <traceback object at 0x000001BAE72A48C0>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\middleware\locale.py", line 35, in process_request
+    translation.activate(language)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\__init__.py", line 182, in activate
+    return _trans.activate(language)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 302, in activate
+    _active.value = translation(language)
+                    ~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 291, in translation
+    _translations[language] = DjangoTranslation(language)
+                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 171, in __init__
+    self._add_local_translations()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 231, in _add_local_translations
+    translation = self._new_gnu_trans(localedir)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 198, in _new_gnu_trans
+    return gettext_module.translation(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        domain=self.domain,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fallback=use_null_fallback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 547, in translation
+    t = _translations.setdefault(key, class_(fp))
+                                      ~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 279, in __init__
+    self._parse(fp)
+    ~~~~~~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 370, in _parse
+    raise OSError(0, 'Bad magic number', filename)
+OSError: [Errno 0] Bad magic number: 'D:\\SKILLFACTORY\\NewsPortal\\locale\\ru\\LC_MESSAGES\\django.mo'
+2025-08-09 21:18:02,799 ERROR "GET / HTTP/1.1" 500 113233 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-09 21:18:03,081 ERROR Internal Server Error: /favicon.ico D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'OSError'>, OSError(0, 'Bad magic number'), <traceback object at 0x000001BAE735CE80>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\middleware\locale.py", line 35, in process_request
+    translation.activate(language)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\__init__.py", line 182, in activate
+    return _trans.activate(language)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 302, in activate
+    _active.value = translation(language)
+                    ~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 291, in translation
+    _translations[language] = DjangoTranslation(language)
+                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 171, in __init__
+    self._add_local_translations()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 231, in _add_local_translations
+    translation = self._new_gnu_trans(localedir)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 198, in _new_gnu_trans
+    return gettext_module.translation(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        domain=self.domain,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fallback=use_null_fallback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 547, in translation
+    t = _translations.setdefault(key, class_(fp))
+                                      ~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 279, in __init__
+    self._parse(fp)
+    ~~~~~~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 370, in _parse
+    raise OSError(0, 'Bad magic number', filename)
+OSError: [Errno 0] Bad magic number: 'D:\\SKILLFACTORY\\NewsPortal\\locale\\ru\\LC_MESSAGES\\django.mo'
+2025-08-09 21:18:03,085 ERROR "GET /favicon.ico HTTP/1.1" 500 113147 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-09 21:18:17,103 ERROR Internal Server Error: /admin/ D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'OSError'>, OSError(0, 'Bad magic number'), <traceback object at 0x000001BAE6FE1B40>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\middleware\locale.py", line 35, in process_request
+    translation.activate(language)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\__init__.py", line 182, in activate
+    return _trans.activate(language)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 302, in activate
+    _active.value = translation(language)
+                    ~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 291, in translation
+    _translations[language] = DjangoTranslation(language)
+                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 171, in __init__
+    self._add_local_translations()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 231, in _add_local_translations
+    translation = self._new_gnu_trans(localedir)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 198, in _new_gnu_trans
+    return gettext_module.translation(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        domain=self.domain,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fallback=use_null_fallback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 547, in translation
+    t = _translations.setdefault(key, class_(fp))
+                                      ~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 279, in __init__
+    self._parse(fp)
+    ~~~~~~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 370, in _parse
+    raise OSError(0, 'Bad magic number', filename)
+OSError: [Errno 0] Bad magic number: 'D:\\SKILLFACTORY\\NewsPortal\\locale\\ru\\LC_MESSAGES\\django.mo'
+2025-08-09 21:18:17,106 ERROR "GET /admin/ HTTP/1.1" 500 113403 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-09 21:18:17,175 ERROR Internal Server Error: /favicon.ico D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'OSError'>, OSError(0, 'Bad magic number'), <traceback object at 0x000001BAE728FC00>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\middleware\locale.py", line 35, in process_request
+    translation.activate(language)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\__init__.py", line 182, in activate
+    return _trans.activate(language)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 302, in activate
+    _active.value = translation(language)
+                    ~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 291, in translation
+    _translations[language] = DjangoTranslation(language)
+                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 171, in __init__
+    self._add_local_translations()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 231, in _add_local_translations
+    translation = self._new_gnu_trans(localedir)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\translation\trans_real.py", line 198, in _new_gnu_trans
+    return gettext_module.translation(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        domain=self.domain,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fallback=use_null_fallback,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 547, in translation
+    t = _translations.setdefault(key, class_(fp))
+                                      ~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 279, in __init__
+    self._parse(fp)
+    ~~~~~~~~~~~^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1520.0_x64__qbz5n2kfra8p0\Lib\gettext.py", line 370, in _parse
+    raise OSError(0, 'Bad magic number', filename)
+OSError: [Errno 0] Bad magic number: 'D:\\SKILLFACTORY\\NewsPortal\\locale\\ru\\LC_MESSAGES\\django.mo'
+2025-08-09 21:18:17,177 ERROR "GET /favicon.ico HTTP/1.1" 500 113153 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None

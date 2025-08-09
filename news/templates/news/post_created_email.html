@@ -1,12 +1,75 @@
+{% load i18n %}
+
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <title>Новая статья</title>
+    <meta charset="UTF-8">
+    <title>{% trans "New article" %}</title>
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .article-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .article-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+        .article-excerpt {
+            margin: 20px 0;
+        }
+        .read-more {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Новая статья: {{ post.title }}</h1>
-    <p>Категории: {{ categories|join:", " }}</p>
-    <p>{{ post.text|truncatechars:50 }}</p>
-    <a href="http://{{ site.domain }}{% url 'post_detail' post.pk %}">Читать полностью</a>
+    <div class="article-container">
+        <h1 class="article-title">
+            {% blocktrans with title=post.title %}
+            New article: {{ title }}
+            {% endblocktrans %}
+        </h1>
+
+        <p class="article-meta">
+            {% trans "Categories" %}:
+            {% for category in categories %}
+                {{ category.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+
+        <div class="article-excerpt">
+            {{ post.text|truncatechars:50 }}
+        </div>
+
+        <a href="http://{{ site.domain }}{% url 'post_detail' post.pk %}" class="read-more">
+            {% trans "Read full article" %}
+        </a>
+
+        <footer style="margin-top: 30px; font-size: 0.8em; color: #95a5a6;">
+            <p>
+                {% blocktrans with site_name=site.name %}
+                You received this notification because you subscribed to updates from {{ site_name }}
+                {% endblocktrans %}
+            </p>
+            <p>
+                <a href="http://{{ site.domain }}{% url 'unsubscribe' %}" style="color: #95a5a6;">
+                    {% trans "Unsubscribe from notifications" %}
+                </a>
+            </p>
+        </footer>
+    </div>
 </body>
 </html>

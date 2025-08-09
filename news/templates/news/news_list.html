@@ -1,38 +1,82 @@
+{% load i18n %}
 
-{% extends 'default.html' %}
-{% load custom_filters %}
+<div class="search-container">
+    <form method="get" class="search-form" aria-label="{% trans 'Search form' %}">
+        <div class="form-fields">
+            {{ filter.form.as_p }}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="search-button" aria-label="{% trans 'Submit search' %}">
+                <i class="icon-search"></i>
+                {% trans "Search" %}
+            </button>
+            
+            <a href="?" class="reset-button" aria-label="{% trans 'Reset filters' %}">
+                {% trans "Reset" %}
+            </a>
+        </div>
+    </form>
 
-{% block title %}News List{% endblock %}
-
-{% block content %}
-    <h2>All News</h2>
-    <ul>
-        {% for post in posts %}
-            <li>
-                <h3><a href="{% url 'news_detail' post.pk %}">{{ post.title|censor }}</a></h3>
-                <p>{{ post.created_at|date:"d.m.Y" }}</p>
-                <p>{{ post.content|truncatechars:20|censor }}</p>
-            </li>
-        {% empty %}
-            <li>No news yet.</li>
-        {% endfor %}
-    </ul>
-{% endblock %}
-
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; Первая</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+    <div class="search-results-container">
+        {% if filter.qs %}
+            <h2 class="results-heading">
+                {% blocktrans count counter=filter.qs.count %}
+                    Found {{ counter }} result
+                {% plural %}
+                    Found {{ counter }} results
+                {% endblocktrans %}
+            </h2>
+            
+            <ul class="search-results">
+                {% for post in filter.qs %}
+                    <li class="search-result-item">
+                        <article>
+                            <h3 class="post-title">
+                                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            </h3>
+                            
+                            <div class="post-meta">
+                                <span class="post-author">
+                                    {% blocktrans with author=post.author.get_full_name|default:post.author.username %}
+                                        By {{ author }}
+                                    {% endblocktrans %}
+                                </span>
+                                
+                                <span class="post-date">
+                                    {{ post.date_created|date:"SHORT_DATE_FORMAT" }}
+                                </span>
+                                
+                                {% if post.category %}
+                                <span class="post-category">
+                                    {% trans "in" %} 
+                                    <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a>
+                                </span>
+                                {% endif %}
+                            </div>
+                            
+                            <p class="post-excerpt">
+                                {{ post.content|striptags|truncatewords:30 }}
+                            </p>
+                        </article>
+                    </li>
+                {% endfor %}
+            </ul>
+            
+            {% if is_paginated %}
+            <div class="pagination">
+                {% include "includes/pagination.html" %}
+            </div>
+            {% endif %}
+        {% else %}
+            <div class="no-results">
+                <i class="icon-no-results"></i>
+                <h3>{% trans "No results found" %}</h3>
+                <p>
+                    {% trans "Try adjusting your search or filter criteria." %}
+                    <a href="?">{% trans "Clear all filters" %}</a>
+                </p>
+            </div>
         {% endif %}
-
-        <span class="current">
-            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
-        {% endif %}
-    </span>
+    </div>
 </div>

@@ -1,7 +1,29 @@
+{% load i18n %}
+
 {% if user.is_authenticated %}
-  {% if category in user.subscriber.categories.all %}
-    <a href="{% url 'news:unsubscribe' category.id %}" class="btn btn-danger">Отписаться</a>
-  {% else %}
-    <a href="{% url 'news:subscribe' category.id %}" class="btn btn-success">Подписаться</a>
-  {% endif %}
+  <div class="subscription-actions">
+    {% if category in user.subscriber.categories.all %}
+      <a href="{% url 'news:unsubscribe' category.id %}"
+         class="btn btn-danger"
+         aria-label="{% trans 'Unsubscribe from this category' %}">
+        <i class="fas fa-bell-slash me-2"></i>
+        {% trans "Unsubscribe" %}
+      </a>
+    {% else %}
+      <a href="{% url 'news:subscribe' category.id %}"
+         class="btn btn-success"
+         aria-label="{% trans 'Subscribe to this category' %}">
+        <i class="fas fa-bell me-2"></i>
+        {% trans "Subscribe" %}
+      </a>
+    {% endif %}
+  </div>
+{% else %}
+  <div class="subscription-login-prompt">
+    <a href="{% url 'login' %}?next={{ request.path }}"
+       class="btn btn-outline-secondary">
+      <i class="fas fa-sign-in-alt me-2"></i>
+      {% trans "Login to subscribe" %}
+    </a>
+  </div>
 {% endif %}
