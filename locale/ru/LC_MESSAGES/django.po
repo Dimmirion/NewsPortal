@@ -1,0 +1,418 @@
+# Russian translations for NewsPortal
+# Copyright (C) 2025 NewsPortal
+# This file is distributed under the same license as the NewsPortal package.
+# Team <team@newsportal.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: NewsPortal 1.0\n"
+"Report-Msgid-Bugs-To: dev@newsportal.com\n"
+"POT-Creation-Date: 2025-08-09 20:56+0300\n"
+"PO-Revision-Date: 2025-08-10 12:00+0300\n"
+"Last-Translator: Team <team@newsportal.com>\n"
+"Language-Team: Russian <team@newsportal.com>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: .\news\templates\account\login.html:8
+msgid "Login"
+msgstr "Вход"
+
+#: .\news\templates\account\login.html:10
+msgid "Please enter your credentials"
+msgstr "Пожалуйста, введите ваши учетные данные"
+
+#: .\news\templates\account\login.html:27
+msgid "Username or Email"
+msgstr "Имя пользователя или Email"
+
+#: .\news\templates\account\login.html:42
+msgid "Password"
+msgstr "Пароль"
+
+#: .\news\templates\account\login.html:45
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: .\news\templates\account\login.html:61
+#: .\news\templates\account\signup.html:49
+msgid "Log In"
+msgstr "Войти"
+
+#: .\news\templates\account\login.html:69
+msgid "Remember me"
+msgstr "Запомнить меня"
+
+#: .\news\templates\account\login.html:77
+msgid "Don't have an account?"
+msgstr "Нет аккаунта?"
+
+#: .\news\templates\account\login.html:79
+#: .\news\templates\account\signup.html:7
+msgid "Sign Up"
+msgstr "Регистрация"
+
+#: .\news\templates\account\login.html:84
+msgid "Or login with:"
+msgstr "Или войдите через:"
+
+#: .\news\templates\account\signup.html:41
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: .\news\templates\account\signup.html:48
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+#: .\news\templates\become_author.html:8
+msgid "Become an author"
+msgstr "Стать автором"
+
+#: .\news\templates\become_author.html:17
+msgid "Become an author now"
+msgstr "Стать автором сейчас"
+
+#: .\news\templates\become_author.html:24
+msgid "By becoming an author you agree to our terms"
+msgstr "Становясь автором, вы соглашаетесь с нашими условиями"
+
+#: .\news\templates\default.html:6 .\news\templates\default.html:42
+#, python-format
+msgid "%(title)s"
+msgstr "%(title)s"
+
+#: .\news\templates\default.html:13
+msgid "Main"
+msgstr "Главная"
+
+#: .\news\templates\default.html:14
+msgid "News"
+msgstr "Новости"
+
+#: .\news\templates\default.html:15
+msgid "About us"
+msgstr "О нас"
+
+#: .\news\templates\default.html:16
+msgid "Contacts"
+msgstr "Контакты"
+
+#: .\news\templates\default.html:31
+#: .\news\templates\news\post_created_email.html:47
+msgid "Categories"
+msgstr "Категории"
+
+#: .\news\templates\default.html:34
+#, python-format
+msgid "%(name)s"
+msgstr "%(name)s"
+
+#: .\news\templates\default.html:39
+msgid "Popular news"
+msgstr "Популярные новости"
+
+#: .\news\templates\default.html:52
+#, python-format
+msgid "© %(year)s News Portal. All rights reserved."
+msgstr "© %(year)s Новостной портал. Все права защищены."
+
+#: .\news\templates\emails\weekly_digest.html:7
+msgid "Weekly digest"
+msgstr "Еженедельный дайджест"
+
+#: .\news\templates\emails\weekly_digest.html:60
+#, python-format
+msgid ""
+"\n"
+"            Hello, %(username)s!\n"
+"            "
+msgstr ""
+"\n"
+"            Здравствуйте, %(username)s!\n"
+"            "
+
+#: .\news\templates\emails\weekly_digest.html:66
+#, python-format
+msgid ""
+"\n"
+"            New articles in category \"<span class=\"category-"
+"name\">%(category_name)s</span>\" for the past week:\n"
+"            "
+msgstr ""
+"\n"
+"            Новые статьи в категории \"<span class=\"category-"
+"name\">%(category_name)s</span>\" за последнюю неделю:\n"
+"            "
+
+#: .\news\templates\emails\weekly_digest.html:79
+#: .\news\templates\news\post_created_email.html:58
+#: .\news\templates\news\weekly_newsletter.html:32
+msgid "Read full article"
+msgstr "Читать полностью"
+
+#: .\news\templates\emails\weekly_digest.html:86
+msgid "Best regards,"
+msgstr "С уважением,"
+
+#: .\news\templates\emails\weekly_digest.html:87
+msgid "The NewsPortal Team"
+msgstr "Команда NewsPortal"
+
+#: .\news\templates\news\category_detail.html:8
+msgid "Unsubscribe from this category"
+msgstr "Отписаться от этой категории"
+
+#: .\news\templates\news\category_detail.html:10
+#: .\news\templates\news\news_detail.html:45
+#: .\news\templates\news\weekly_newsletter.html:45
+msgid "Unsubscribe"
+msgstr "Отписаться"
+
+#: .\news\templates\news\category_detail.html:15
+msgid "Subscribe to this category"
+msgstr "Подписаться на эту категорию"
+
+#: .\news\templates\news\category_detail.html:17
+#: .\news\templates\news\news_detail.html:50
+msgid "Subscribe"
+msgstr "Подписаться"
+
+#: .\news\templates\news\category_detail.html:26
+msgid "Login to subscribe"
+msgstr "Войдите для подписки"
+
+#: .\news\templates\news\home.html:7
+msgid "Latest News"
+msgstr "Последние новости"
+
+#: .\news\templates\news\home.html:9
+msgid "Subscribe to RSS"
+msgstr "Подписаться на RSS"
+
+#: .\news\templates\news\home.html:30
+#, python-format
+msgid ""
+"\n"
+"                        Published: %(pub_date)s\n"
+"                        "
+msgstr ""
+"\n"
+"                        Опубликовано: %(pub_date)s\n"
+"                        "
+
+#: .\news\templates\news\home.html:37
+#, python-format
+msgid ""
+"\n"
+"                        %(comments)s comment\n"
+"                        "
+msgid_plural ""
+"\n"
+"                        %(comments)s comments\n"
+"                        "
+msgstr[0] ""
+"\n"
+"                        %(comments)s комментарий\n"
+"                        "
+msgstr[1] ""
+"\n"
+"                        %(comments)s комментария\n"
+"                        "
+msgstr[2] ""
+"\n"
+"                        %(comments)s комментариев\n"
+"                        "
+
+#: .\news\templates\news\home.html:49
+msgid "No news available"
+msgstr "Новостей нет"
+
+#: .\news\templates\news\home.html:56
+msgid "View News Archive"
+msgstr "Просмотреть архив новостей"
+
+#: .\news\templates\news\news_detail.html:14
+#, python-format
+msgid ""
+"\n"
+"                Author: %(author)s\n"
+"                "
+msgstr ""
+"\n"
+"                Автор: %(author)s\n"
+"                "
+
+#: .\news\templates\news\news_detail.html:21
+msgid "Published on"
+msgstr "Опубликовано"
+
+#: .\news\templates\news\news_detail.html:26
+#, python-format
+msgid ""
+"\n"
+"                %(views)s view\n"
+"                "
+msgid_plural ""
+"\n"
+"                %(views)s views\n"
+"                "
+msgstr[0] ""
+"\n"
+"                %(views)s просмотр\n"
+"                "
+msgstr[1] ""
+"\n"
+"                %(views)s просмотра\n"
+"                "
+msgstr[2] ""
+"\n"
+"                %(views)s просмотров\n"
+"                "
+
+#: .\news\templates\news\news_detail.html:58
+msgid "Back to news list"
+msgstr "Вернуться к списку новостей"
+
+#: .\news\templates\news\news_list.html:4
+msgid "Search form"
+msgstr "Форма поиска"
+
+#: .\news\templates\news\news_list.html:10
+msgid "Submit search"
+msgstr "Выполнить поиск"
+
+#: .\news\templates\news\news_list.html:12
+#: .\news\templates\news\news_search.html:6
+msgid "Search"
+msgstr "Поиск"
+
+#: .\news\templates\news\news_list.html:15
+msgid "Reset filters"
+msgstr "Сбросить фильтры"
+
+#: .\news\templates\news\news_list.html:16
+msgid "Reset"
+msgstr "Сбросить"
+
+#: .\news\templates\news\news_list.html:24
+#, python-format
+msgid ""
+"\n"
+"                    Found %(counter)s result\n"
+"                "
+msgid_plural ""
+"\n"
+"                    Found %(counter)s results\n"
+"                "
+msgstr[0] ""
+"\n"
+"                    Найден %(counter)s результат\n"
+"                "
+msgstr[1] ""
+"\n"
+"                    Найдено %(counter)s результата\n"
+"                "
+msgstr[2] ""
+"\n"
+"                    Найдено %(counter)s результатов\n"
+"                "
+
+#: .\news\templates\news\news_list.html:41
+#, python-format
+msgid ""
+"\n"
+"                                        By %(author)s\n"
+"                                    "
+msgstr ""
+"\n"
+"                                        Автор: %(author)s\n"
+"                                    "
+
+#: .\news\templates\news\news_list.html:52
+msgid "in"
+msgstr "в"
+
+#: .\news\templates\news\news_list.html:74
+#: .\news\templates\news\news_search.html:24
+msgid "No results found"
+msgstr "Ничего не найдено"
+
+#: .\news\templates\news\news_list.html:76
+msgid "Try adjusting your search or filter criteria."
+msgstr "Попробуйте изменить параметры поиска."
+
+#: .\news\templates\news\news_list.html:77
+msgid "Clear all filters"
+msgstr "Очистить все фильтры"
+
+#: .\news\templates\news\news_search.html:16
+#, python-format
+msgid ""
+"\n"
+"                (%(author)s, %(date)s)\n"
+"                "
+msgstr ""
+"\n"
+"                (%(author)s, %(date)s)\n"
+"                "
+
+#: .\news\templates\news\post_created_email.html:7
+msgid "New article"
+msgstr "Новая статья"
+
+#: .\news\templates\news\post_created_email.html:41
+#, python-format
+msgid ""
+"\n"
+"            New article: %(title)s\n"
+"            "
+msgstr ""
+"\n"
+"            Новая статья: %(title)s\n"
+"            "
+
+#: .\news\templates\news\post_created_email.html:63
+#, python-format
+msgid ""
+"\n"
+"                You received this notification because you subscribed to "
+"updates from %(site_name)s\n"
+"                "
+msgstr ""
+"\n"
+"                Вы получили это уведомление, так как подписаны на обновления с %(site_name)s\n"
+"                "
+
+#: .\news\templates\news\post_created_email.html:69
+msgid "Unsubscribe from notifications"
+msgstr "Отписаться от уведомлений"
+
+#: .\news\templates\news\weekly_newsletter.html:7
+msgid "Weekly news digest"
+msgstr "Еженедельная подборка новостей"
+
+#: .\news\templates\news\weekly_newsletter.html:22
+#, python-format
+msgid ""
+"\n"
+"        Weekly news in category: %(category_name)s\n"
+"        "
+msgstr ""
+"\n"
+"        Новости за неделю в категории: %(category_name)s\n"
+"        "
+
+#: .\news\templates\news\weekly_newsletter.html:39
+#, python-format
+msgid ""
+"\n"
+"            You received this email because you subscribed to updates from "
+"%(site_name)s (%(domain)s)\n"
+"            "
+msgstr ""
+"\n"
+"            Вы получили это письмо, так как подписаны на обновления с %(site_name)s (%(domain)s)\n"
+"            "

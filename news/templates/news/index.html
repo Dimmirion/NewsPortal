@@ -1,0 +1,71 @@
+{% extends "news/base.html" %}
+
+{% block title %}Главная | Новостной портал{% endblock %}
+
+{% block content %}
+<div class="news-container">
+    <h1 class="page-title">Последние новости</h1>
+
+    <!-- Фильтры/поиск -->
+    <div class="news-filters">
+        <form method="get" class="search-form">
+            <input type="text" name="q" placeholder="Поиск новостей..." value="{{ request.GET.q }}">
+            <button type="submit">Найти</button>
+        </form>
+        <div class="category-filter">
+            <span>Категории:</span>
+            <a href="?category=all" class="{% if not active_category %}active{% endif %}">Все</a>
+            {% for category in categories %}
+                <a href="?category={{ category.slug }}"
+                   class="{% if category.slug == active_category %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Список новостей -->
+    <div class="news-list">
+        {% for news_item in news %}
+        <article class="news-card">
+            <div class="news-image">
+                {% if news_item.image %}
+                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}">
+                {% endif %}
+            </div>
+            <div class="news-content">
+                <span class="news-date">{{ news_item.published_at|date:"d.m.Y H:i" }}</span>
+                <h2><a href="{% url 'news_detail' news_item.slug %}">{{ news_item.title }}</a></h2>
+                <p class="news-excerpt">{{ news_item.excerpt|truncatechars:150 }}</p>
+                <div class="news-meta">
+                    <span class="news-category">{{ news_item.category.name }}</span>
+                    <span class="news-views">👁 {{ news_item.views }}</span>
+                    <span class="news-comments">💬 {{ news_item.comments_count }}</span>
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <p class="no-news">Новости не найдены</p>
+        {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    {% if is_paginated %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-first">« Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-prev">‹ Пред.</a>
+        {% endif %}
+
+        <span class="current-page">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-next">След. ›</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="page-last">Посл. »</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

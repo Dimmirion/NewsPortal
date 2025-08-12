@@ -1,17 +1,51 @@
+{% load i18n %}
+
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <title>Еженедельная подборка новостей</title>
+    <meta charset="UTF-8">
+    <title>{% trans "Weekly news digest" %}</title>
+    <style>
+        .news-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .read-more {
+            color: #0066cc;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Новости за неделю в категории {{ category.name }}</h1>
+    <h1>
+        {% blocktrans with category_name=category.name %}
+        Weekly news in category: {{ category_name }}
+        {% endblocktrans %}
+    </h1>
 
     {% for post in posts %}
-    <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+    <div class="news-item">
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|truncatechars:100 }}</p>
-        <a href="http://{{ site.domain }}{% url 'post_detail' post.pk %}">Читать полностью</a>
+        <a href="http://{{ site.domain }}{% url 'post_detail' post.pk %}" class="read-more">
+            {% trans "Read full article" %}
+        </a>
     </div>
     {% endfor %}
+
+    <footer style="margin-top: 30px; font-size: 0.9em; color: #666;">
+        <p>
+            {% blocktrans with site_name=site.name domain=site.domain %}
+            You received this email because you subscribed to updates from {{ site_name }} ({{ domain }})
+            {% endblocktrans %}
+        </p>
+        <p>
+            <a href="http://{{ site.domain }}{% url 'unsubscribe' %}" style="color: #666;">
+                {% trans "Unsubscribe" %}
+            </a>
+        </p>
+    </footer>
 </body>
 </html>
+

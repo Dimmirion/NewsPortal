@@ -1,10 +1,25 @@
-<form method="get">
+{% load i18n %}
+
+<form method="get" class="search-form">
     {{ filter.form.as_p }}
-    <button type="submit">Поиск</button>
+    <button type="submit" class="search-button">
+        {% trans "Search" %}
+    </button>
 </form>
 
-<ul>
+{% if filter.qs %}
+<ul class="search-results">
     {% for post in filter.qs %}
-        <li>{{ post.title }} ({{ post.author }}, {{ post.date_created }})</li>
+        <li class="search-result-item">
+            <span class="post-title">{{ post.title }}</span>
+            <span class="post-meta">
+                {% blocktrans with author=post.author date=post.date_created|date:"SHORT_DATE_FORMAT" %}
+                ({{ author }}, {{ date }})
+                {% endblocktrans %}
+            </span>
+        </li>
     {% endfor %}
 </ul>
+{% else %}
+<p class="no-results">{% trans "No results found" %}</p>
+{% endif %}

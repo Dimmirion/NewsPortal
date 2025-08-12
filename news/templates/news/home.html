@@ -1,0 +1,60 @@
+{% extends 'default.html' %}
+{% load i18n %}
+
+{% block content %}
+<section class="latest-news">
+    <header class="section-header">
+        <h1>{% trans "Latest News" %}</h1>
+        <a href="{% url 'news_feed' %}" class="rss-link">
+            <i class="fas fa-rss"></i> {% trans "Subscribe to RSS" %}
+        </a>
+    </header>
+
+    <div class="news-list">
+        {% for news_item in latest_news %}
+        <article class="news-item card">
+            <div class="card-body">
+                <h2 class="news-title">
+                    <a href="{% url 'news_detail' news_item.id %}">
+                        {{ news_item.title }}
+                    </a>
+                </h2>
+
+                <p class="news-preview">
+                    {{ news_item.preview|truncatewords:30 }}
+                </p>
+
+                <div class="news-meta">
+                    <span class="publish-date">
+                        <i class="far fa-clock"></i>
+                        {% blocktrans with pub_date=news_item.pub_date|date:"SHORT_DATETIME_FORMAT" %}
+                        Published: {{ pub_date }}
+                        {% endblocktrans %}
+                    </span>
+
+                    <span class="comments-count">
+                        <i class="far fa-comment"></i>
+                        {% blocktrans count comments=news_item.comments.count %}
+                        {{ comments }} comment
+                        {% plural %}
+                        {{ comments }} comments
+                        {% endblocktrans %}
+                    </span>
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <div class="no-news">
+            <i class="far fa-newspaper"></i>
+            <p>{% trans "No news available" %}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer class="section-footer">
+        <a href="{% url 'news_archive' %}" class="btn btn-outline-primary">
+            {% trans "View News Archive" %}
+        </a>
+    </footer>
+</section>
+{% endblock %}
