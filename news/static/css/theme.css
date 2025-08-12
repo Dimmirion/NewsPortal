@@ -1,0 +1,67 @@
+/* Базовые переменные */
+:root {
+    /* Светлая тема */
+    --light-bg: #ffffff;
+    --light-text: #212529;
+    --light-card: #f8f9fa;
+    --light-border: #dee2e6;
+    --light-link: #0d6efd;
+
+    /* Темная тема */
+    --dark-bg: #1a1a1a;
+    --dark-text: #f8f9fa;
+    --dark-card: #2d2d2d;
+    --dark-border: #444;
+    --dark-link: #7db4ff;
+}
+
+/* Общие стили для светлой темы */
+[data-theme="light"] {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+[data-theme="light"] .card,
+[data-theme="light"] .navbar,
+[data-theme="light"] footer {
+    background-color: var(--light-card);
+    border-color: var(--light-border);
+}
+
+[data-theme="light"] a {
+    color: var(--light-link);
+}
+
+/* Общие стили для темной темы */
+[data-theme="dark"] {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .navbar,
+[data-theme="dark"] footer {
+    background-color: var(--dark-card);
+    border-color: var(--dark-border);
+}
+
+[data-theme="dark"] a {
+    color: var(--dark-link);
+}
+
+/* Дополнительные элементы */
+[data-theme="dark"] .btn-primary {
+    background-color: #3a5a78;
+    border-color: #2c3e50;
+}
+
+[data-theme="dark"] .table {
+    color: var(--dark-text);
+    background-color: var(--dark-card);
+}
+
+[data-theme="dark"] .form-control {
+    background-color: #333;
+    color: white;
+    border-color: #555;
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="{{ theme }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NewsPortal{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Статические файлы -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <!-- Иконка сайта -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    <!-- Встроенные стили для критически важного CSS -->
+    <style>
+        :root {
+            --light-bg: #f8f9fa;
+            --light-text: #212529;
+            --light-card: #ffffff;
+            --dark-bg: #1a1a1a;
+            --dark-text: #f8f9fa;
+            --dark-card: #2d2d2d;
+        }
+
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        [data-theme="dark"] {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">NewsPortal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news_list' %}">Новости</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <!-- Форма выбора часового пояса -->
+                    <form action="{% url 'set_timezone' %}" method="post" class="me-3">
+                        {% csrf_token %}
+                        <select name="timezone" class="form-select form-select-sm" onchange="this.form.submit()">
+                            {% for tz in timezones %}
+                            <option value="{{ tz }}" {% if tz == user_timezone %}selected{% endif %}>{{ tz }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+
+                    <!-- Переключатель темы -->
+                    <button class="btn btn-sm btn-outline-light theme-switcher" onclick="toggleTheme()" aria-label="Toggle theme">
+                        <span id="theme-icon">🌓</span>
+                        <span id="theme-text" class="ms-1 d-none d-sm-inline">Сменить тему</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое -->
+    <main class="container mb-5">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block breadcrumbs %}{% endblock %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer class="py-4 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© {% now "Y" %} NewsPortal. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="{% url 'privacy' %}" class="text-white me-3">Политика конфиденциальности</a>
+                    <a href="{% url 'terms' %}" class="text-white">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Кастомный JS -->
+    <script>
+        // Проверяем сохраненную тему при загрузке
+        function initializeTheme() {
+            const html = document.documentElement;
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            // Приоритет: сохраненная тема > системная настройка > светлая тема
+            const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+            html.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+
+        // Обновление иконки темы
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+
+            if (theme === 'light') {
+                icon.textContent = '🌞';
+                text.textContent = 'Темная тема';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Светлая тема';
+            }
+        }
+
+        // Переключение темы
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+    </script>
+</body>
+</html>

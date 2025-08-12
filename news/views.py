@@ -1,96 +1,109 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.contrib.auth.models import Group
 
-from .models import Post
+from .models import Post, Category, Subscriber
 from .filters import PostFilter
+from .forms import TimeZoneForm
 
-# Список новостей с пагинацией
+
 class NewsList(ListView):
     model = Post
     template_name = 'news/news_list.html'
     context_object_name = 'news'
     ordering = ['-date_created']
-    paginate_by = 10  # 10 новостей на страницу
+    paginate_by = 10
 
-# Поиск новостей
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['active_category'] = self.request.GET.get('category')
+        return context
+
+
 class NewsSearch(ListView):
     model = Post
     template_name = 'news/news_search.html'
     ordering = ['-date_created']
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
+        context['categories'] = Category.objects.all()
+        context['active_category'] = self.request.GET.get('category')
         return context
 
-# Создание новости
-class NewsCreate(CreateView):
+
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'category']
     template_name = 'news/news_create.html'
 
     def form_valid(self, form):
-        form.instance.post_type = Post.NEWS  # Автоматически ставим тип "Новость"
+        form.instance.post_type = Post.NEWS
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
-# Создание статьи
-class ArticleCreate(CreateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
+
+class ArticleCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'category']
     template_name = 'news/article_create.html'
 
     def form_valid(self, form):
-        form.instance.post_type = Post.ARTICLE  # Автоматически ставим тип "Статья"
+        form.instance.post_type = Post.ARTICLE
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
-# Редактирование (общее для новостей и статей)
-class PostUpdate(UpdateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
+
+class PostUpdateView(PermissionRequiredMixin, UpdateView):  # Изменено с PostUpdate на PostUpdateView
+    permission_required = ('news.change_post',)
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'category']
     template_name = 'news/post_edit.html'
 
-# Удаление (общее для новостей и статей)
-class PostDelete(DeleteView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
+
+class PostDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
     template_name = 'news/post_delete.html'
     success_url = '/news/'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import UpdateView
-from .models import Post
-
-class PostUpdateView(LoginRequiredMixin, UpdateView):
-    model = Post
-    fields = ['title', 'content']  # Укажите нужные поля
-    template_name = 'post_edit.html'  # Шаблон для редактирования
-    success_url = '/'  # Куда перенаправлять после успешного редактирования
-
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
-
-from django.shortcuts import redirect
 
 @login_required
 def become_author(request):
-    author_group = Group.objects.get(name='authors')
+    author_group = Group.objects.get_or_create(name='authors')[0]
     request.user.groups.add(author_group)
     return redirect('/')
 
-from django.contrib.auth.mixins import PermissionRequiredMixin
-
-class PostCreate(PermissionRequiredMixin, CreateView):
-    permission_required = ('news.add_post',)
-    ...
-
-class PostUpdate(PermissionRequiredMixin, UpdateView):
-    permission_required = ('news.change_post',)
-    ...
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
-from .models import Category, Subscriber
 
 @login_required
 def subscribe(request, category_id):
@@ -98,6 +111,7 @@ def subscribe(request, category_id):
     subscriber, created = Subscriber.objects.get_or_create(user=request.user)
     subscriber.categories.add(category)
     return redirect('category_detail', category_id=category.id)
+
 
 @login_required
 def unsubscribe(request, category_id):
@@ -107,66 +121,90 @@ def unsubscribe(request, category_id):
     return redirect('category_detail', category_id=category.id)
 
 
-from django.views.decorators.cache import cache_page
-from django.core.cache import cache
-
-
-def get_sidebar_data():
-    """Функция для получения данных сайдбара с кэшированием"""
-    cache_key = 'sidebar_data'
-    data = cache.get(cache_key)
-
-    if not data:
-        categories = Category.objects.all()
-        popular_news = News.objects.order_by('-views')[:5]
-        data = {
-            'categories': categories,
-            'popular_news': popular_news,
-        }
-        cache.set(cache_key, data, 300)  # Кэшируем на 5 минут
-
-    return data
-
-from django.views.decorators.cache import cache_page
-from django.core.cache import cache
-
-
-@cache_page(60)  # Кэшируем главную страницу на 1 минуту
+@cache_page(60)
 def home(request):
-    categories = Category.objects.all()
-    popular_news = News.objects.order_by('-views')[:5]
+    news_items = Post.objects.order_by('-date_created')[:5]
+    paginator = Paginator(news_items, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'title': 'Главная страница',
-        'categories': categories,
-        'popular_news': popular_news,
+        'news': news_items,
+        'categories': Category.objects.all(),
+        'active_category': request.GET.get('category'),
+        'is_paginated': True,
+        'page_obj': page_obj,
+        'popular_news': Post.objects.order_by('-views')[:5],
     }
-    return render(request, 'news/home.html', context)
+    return render(request, 'news/index.html', context)
 
 
 def news_list(request):
-    news = News.objects.all()
+    category = request.GET.get('category')
+    if category:
+        news_items = Post.objects.filter(category__slug=category).order_by('-date_created')
+    else:
+        news_items = Post.objects.order_by('-date_created')
+
+    paginator = Paginator(news_items, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'title': 'Все новости',
-        'news': news,
+        'news': news_items,
+        'categories': Category.objects.all(),
+        'active_category': category,
+        'is_paginated': True,
+        'page_obj': page_obj,
     }
     return render(request, 'news/news_list.html', context)
 
 
 def news_detail(request, pk):
-    # Кэширование отдельной статьи
     cache_key = f'news_detail_{pk}'
     news = cache.get(cache_key)
 
     if not news:
-        news = get_object_or_404(News, pk=pk)
-        # Увеличиваем счетчик просмотров
+        news = get_object_or_404(Post, pk=pk)
         news.views += 1
         news.save()
-        # Кэшируем на 5 минут или пока статья не изменится
         cache.set(cache_key, news, 300)
 
     context = {
-        'title': news.title,
         'news': news,
+        'categories': Category.objects.all(),
+        'related_news': Post.objects.filter(category=news.category).exclude(pk=pk)[:3],
     }
     return render(request, 'news/news_detail.html', context)
+
+
+def set_timezone(request):
+    if request.method == 'POST':
+        form = TimeZoneForm(request.POST)
+        if form.is_valid():
+            request.session['django_timezone'] = form.cleaned_data['timezone']
+            return redirect('home')
+    else:
+        form = TimeZoneForm()
+
+    context = {
+        'form': form,
+        'categories': Category.objects.all(),
+    }
+    return render(request, 'timezone_form.html', context)
+
+
+def get_sidebar_data():
+    cache_key = 'sidebar_data'
+    data = cache.get(cache_key)
+
+    if not data:
+        categories = Category.objects.all()
+        popular_news = Post.objects.order_by('-views')[:5]
+        data = {
+            'categories': categories,
+            'popular_news': popular_news,
+        }
+        cache.set(cache_key, data, 300)
+
+    return data

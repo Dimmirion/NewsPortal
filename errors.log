@@ -170,3 +170,265 @@ Traceback (most recent call last):
     raise OSError(0, 'Bad magic number', filename)
 OSError: [Errno 0] Bad magic number: 'D:\\SKILLFACTORY\\NewsPortal\\locale\\ru\\LC_MESSAGES\\django.mo'
 2025-08-09 21:18:17,177 ERROR "GET /favicon.ico HTTP/1.1" 500 113153 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-12 21:32:43,993 ERROR Internal Server Error: /admin/news/category/ D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'django.core.exceptions.FieldError'>, FieldError("Cannot resolve keyword 'subscribers' into field. Choices are: _posts_count, category_subscribers, id, name, post, postcategory"), <traceback object at 0x0000018EB16431C0>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\options.py", line 867, in get_changelist_instance
+    return ChangeList(
+        request,
+    ...<12 lines>...
+        self.search_help_text,
+    )
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\views\main.py", line 91, in __init__
+    self.root_queryset = model_admin.get_queryset(request)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\news\admin.py", line 52, in get_queryset
+    return queryset.annotate(
+           ~~~~~~~~~~~~~~~~~^
+        _posts_count=Count('post'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _subscribers_count=Count('subscribers')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\query.py", line 1649, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\query.py", line 1701, in _annotate
+    clone.query.add_annotation(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        annotation,
+        ^^^^^^^^^^^
+        alias,
+        ^^^^^^
+        select=select,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1218, in add_annotation
+    annotation = annotation.resolve_expression(self, allow_joins=True, reuse=None)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\aggregates.py", line 176, in resolve_expression
+    result = super().resolve_expression(*args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\aggregates.py", line 63, in resolve_expression
+    c = super().resolve_expression(query, allow_joins, reuse, summarize)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\expressions.py", line 300, in resolve_expression
+    expr.resolve_expression(query, allow_joins, reuse, summarize, for_save)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\expressions.py", line 902, in resolve_expression
+    return query.resolve_ref(self.name, allow_joins, reuse, summarize)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 2049, in resolve_ref
+    join_info = self.setup_joins(
+        field_list, self.get_meta(), self.get_initial_alias(), can_reuse=reuse
+    )
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1900, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1805, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'subscribers' into field. Choices are: _posts_count, category_subscribers, id, name, post, postcategory
+2025-08-12 21:32:44,000 ERROR "GET /admin/news/category/ HTTP/1.1" 500 178573 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-12 21:32:46,268 ERROR Internal Server Error: /admin/news/category/ D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'django.core.exceptions.FieldError'>, FieldError("Cannot resolve keyword 'subscribers' into field. Choices are: _posts_count, category_subscribers, id, name, post, postcategory"), <traceback object at 0x0000018EB1882C40>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\options.py", line 719, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\options.py", line 2024, in changelist_view
+    cl = self.get_changelist_instance(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\options.py", line 867, in get_changelist_instance
+    return ChangeList(
+        request,
+    ...<12 lines>...
+        self.search_help_text,
+    )
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\contrib\admin\views\main.py", line 91, in __init__
+    self.root_queryset = model_admin.get_queryset(request)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\news\admin.py", line 52, in get_queryset
+    return queryset.annotate(
+           ~~~~~~~~~~~~~~~~~^
+        _posts_count=Count('post'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        _subscribers_count=Count('subscribers')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\query.py", line 1649, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\query.py", line 1701, in _annotate
+    clone.query.add_annotation(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        annotation,
+        ^^^^^^^^^^^
+        alias,
+        ^^^^^^
+        select=select,
+        ^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1218, in add_annotation
+    annotation = annotation.resolve_expression(self, allow_joins=True, reuse=None)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\aggregates.py", line 176, in resolve_expression
+    result = super().resolve_expression(*args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\aggregates.py", line 63, in resolve_expression
+    c = super().resolve_expression(query, allow_joins, reuse, summarize)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\expressions.py", line 300, in resolve_expression
+    expr.resolve_expression(query, allow_joins, reuse, summarize, for_save)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\expressions.py", line 902, in resolve_expression
+    return query.resolve_ref(self.name, allow_joins, reuse, summarize)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 2049, in resolve_ref
+    join_info = self.setup_joins(
+        field_list, self.get_meta(), self.get_initial_alias(), can_reuse=reuse
+    )
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1900, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ~~~~~~~~~~~~~~~~~~^
+        names[:pivot],
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        fail_on_missing=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1805, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'subscribers' into field. Choices are: _posts_count, category_subscribers, id, name, post, postcategory
+2025-08-12 21:32:46,272 ERROR "GET /admin/news/category/ HTTP/1.1" 500 178573 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-12 21:33:58,175 ERROR Internal Server Error: /news/ D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'django.core.exceptions.FieldError'>, FieldError("Cannot resolve keyword 'date_created' into field. Choices are: author, author_id, categories, comments, created_at, id, is_published, post_type, postcategory, rating, text, title"), <traceback object at 0x0000018EB18B9500>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\list.py", line 158, in get
+    self.object_list = self.get_queryset()
+                       ~~~~~~~~~~~~~~~~~^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\list.py", line 45, in get_queryset
+    queryset = queryset.order_by(*ordering)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\query.py", line 1722, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 2291, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1805, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'date_created' into field. Choices are: author, author_id, categories, comments, created_at, id, is_published, post_type, postcategory, rating, text, title
+2025-08-12 21:33:58,178 ERROR "GET /news/ HTTP/1.1" 500 100730 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-12 21:34:05,023 ERROR Internal Server Error: /news/ D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'django.core.exceptions.FieldError'>, FieldError("Cannot resolve keyword 'date_created' into field. Choices are: author, author_id, categories, comments, created_at, id, is_published, post_type, postcategory, rating, text, title"), <traceback object at 0x0000018EB1C5DF40>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\list.py", line 158, in get
+    self.object_list = self.get_queryset()
+                       ~~~~~~~~~~~~~~~~~^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\list.py", line 45, in get_queryset
+    queryset = queryset.order_by(*ordering)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\query.py", line 1722, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 2291, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1805, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'date_created' into field. Choices are: author, author_id, categories, comments, created_at, id, is_published, post_type, postcategory, rating, text, title
+2025-08-12 21:34:05,025 ERROR "GET /news/ HTTP/1.1" 500 101004 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
+2025-08-12 21:34:10,571 ERROR Internal Server Error: /news/ D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\utils\log.py (<class 'django.core.exceptions.FieldError'>, FieldError("Cannot resolve keyword 'date_created' into field. Choices are: author, author_id, categories, comments, created_at, id, is_published, post_type, postcategory, rating, text, title"), <traceback object at 0x0000018EB17AA340>)
+Traceback (most recent call last):
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\list.py", line 158, in get
+    self.object_list = self.get_queryset()
+                       ~~~~~~~~~~~~~~~~~^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\views\generic\list.py", line 45, in get_queryset
+    queryset = queryset.order_by(*ordering)
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\query.py", line 1722, in order_by
+    obj.query.add_ordering(*field_names)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 2291, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\db\models\sql\query.py", line 1805, in names_to_path
+    raise FieldError(
+    ...<2 lines>...
+    )
+django.core.exceptions.FieldError: Cannot resolve keyword 'date_created' into field. Choices are: author, author_id, categories, comments, created_at, id, is_published, post_type, postcategory, rating, text, title
+2025-08-12 21:34:10,573 ERROR "GET /news/ HTTP/1.1" 500 101004 D:\SKILLFACTORY\NewsPortal\venv\Lib\site-packages\django\core\servers\basehttp.py None
